@@ -1,0 +1,42 @@
+.SortBarWrap {
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
+
+  @media screen and (max-width: 1000px) {
+    span {
+      display: none;
+    }
+    select {
+      width: 100%;
+      background-color: #fa7d0979;
+    }
+  }
+}
+
+.SortBarTitle {
+  margin-right: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #ff4301;
+}
+
+.SortBarSelect {
+  height: 40px;
+  width: 45%;
+  font-size: 20px;
+  font-weight: 500;
+  color: #ff4301;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.SortBarOption {
+  font-size: 20px;
+  font-weight: 500;
+  color: black;
+  background-color: #e97608;
+}
