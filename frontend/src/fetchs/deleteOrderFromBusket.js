@@ -1,5 +1,5 @@
 export const deleteBusketOrderFetch = async (id) => {
-    await fetch(`http://localhost:3005/buskets/${id}`, {
+    await fetch(`/buskets/${id}`, {
         method: "DELETE",
     });
 }

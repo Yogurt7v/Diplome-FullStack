@@ -1,6 +1,6 @@
 export const getRolesFetch = async() => {
     
-    const roles= await fetch("http://localhost:3005/roles").then(
+    const roles= await fetch("/roles").then(
     (loadedRoles) => loadedRoles.json()
   );
 

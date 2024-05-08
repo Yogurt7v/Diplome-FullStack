@@ -1,5 +1,5 @@
 export const getPromocodeFetch = async () => {
-    const promo = await fetch("http://localhost:3005/promocodes/")
+    const promo = await fetch("/promocodes/")
     .then((loadedOrders) => loadedOrders.json())
     .then((loadedOrder) => 
       loadedOrder)

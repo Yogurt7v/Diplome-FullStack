@@ -2,7 +2,7 @@
   "name": "",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:3005",
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@react-input/mask": "^1.0.22",

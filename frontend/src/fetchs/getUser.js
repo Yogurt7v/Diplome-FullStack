@@ -12,7 +12,7 @@ export const transformUser = (dbUser) => ({
 })
 
 export const getUserFetch = async (loginToFind) => {
-  return fetch(`http://localhost:3005/users?login=${loginToFind}`)
+  return fetch(`/users?login=${loginToFind}`)
   .then((loadedUser) => loadedUser.json())
   .then(([loadedUser]) => loadedUser && transformUser(loadedUser))
 };

@@ -1,6 +1,6 @@
 export const fecthBusket = async () => {
 
-    const busket = await fetch(`http://localhost:3005/buskets`)
+    const busket = await fetch(`/buskets`)
     .then((loadedBusket) => loadedBusket.json())
     .then((loadedBusk) => loadedBusk);
 

@@ -6,7 +6,7 @@ export const transformSession = (dbSession) => ({
 
 
 export const addSessionFetch = (hash, user) => {
-    fetch("http://localhost:3005/sessions", {
+    fetch("/sessions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -20,7 +20,7 @@ export const addSessionFetch = (hash, user) => {
   
 export const getSessionFetch = async (hash) =>{
 
-  const result = await fetch(`http://localhost:3005/sessions/${hash}`)
+  const result = await fetch(`/sessions/${hash}`)
   .then((loadedSession) =>loadedSession.json()).then((session) => transformSession(session))
   return result
 
@@ -28,7 +28,7 @@ export const getSessionFetch = async (hash) =>{
 export const deleteSessionFetch = async (sessionId) => {
 
 
-    fetch(`http://localhost:3005/sessions/${sessionId}`, {
+    fetch(`/sessions/${sessionId}`, {
       method: "DELETE",
     });
   };

@@ -1,4 +1,4 @@
 export const deleteProductFetch = (id) =>
-  fetch(`http://localhost:3005/products/${id}`, {
+  fetch(`/products/${id}`, {
     method: "DELETE",
   });

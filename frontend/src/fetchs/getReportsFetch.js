@@ -1,5 +1,5 @@
 export const getReportsFetch = async () => {
-    const response = await fetch("http://localhost:3005/reports", {
+    const response = await fetch("/reports", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

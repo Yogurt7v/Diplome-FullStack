@@ -1,7 +1,7 @@
 import { getUsersFetch } from "./getUsers";
 
 export const getComments = async (productId) => {
-    const comments = await fetch(`http://localhost:3005/comments/${productId}`);
+    const comments = await fetch(`/comments/${productId}`);
     const commentsJson = await comments.json();
     
     const users = await getUsersFetch();

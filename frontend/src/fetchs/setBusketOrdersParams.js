@@ -1,5 +1,5 @@
 export const setBusketOrdersParams = (id, paidParam, deliveryParam) => {
-    fetch(`http://localhost:3005/buskets/${id}`, {
+    fetch(`/buskets/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",

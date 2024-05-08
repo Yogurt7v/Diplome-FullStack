@@ -1,7 +1,7 @@
 import { sessions } from "../fetchs/sessions";
 
 export const loginUser = async (authLogin, authPassword) => {
-  const user = await fetch("http://localhost:3005/login", {
+  const user = await fetch("/login", {
     method: "POST",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify({ login:authLogin, password:authPassword }),

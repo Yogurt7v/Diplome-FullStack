@@ -1,7 +1,7 @@
 
 
 export const addCommentFetch = (author, userId, productId, content) =>
-  fetch("http://localhost:3005/comments", {
+  fetch("/comments", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",

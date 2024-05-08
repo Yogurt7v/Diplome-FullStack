@@ -1,4 +1,4 @@
-// import { sessions } from "../fetchs/sessions";
+
 export const registerFetch = async (
   regLogin,
   regPassword,
@@ -7,7 +7,7 @@ export const registerFetch = async (
   flatNumber,
   phone
 ) => {
-  const user = await fetch("http://localhost:3005/register", {
+  const user = await fetch("/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",

@@ -1,5 +1,5 @@
 const addProductToBusket = (dataBusket) =>{
-    fetch("http://localhost:3005/buskets", {
+    fetch("/buskets", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",

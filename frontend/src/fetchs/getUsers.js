@@ -12,7 +12,7 @@ function transformUser(dbUser) {
 }
 
 export const getUsersFetch = async () => {
-  const users = await fetch("http://localhost:3005/users", {
+  const users = await fetch("/users", {
     method: "GET",
   }).then(
     (loadedUsers) => loadedUsers.json()

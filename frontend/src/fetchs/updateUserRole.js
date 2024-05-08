@@ -6,7 +6,7 @@ export const updateUserUpdateFetch = async (
   newFlatNumber,
   newPhone
 ) => {
-  const response = await fetch(`http://localhost:3005/users/${userId}`, {
+  const response = await fetch(`/users/${userId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify({
