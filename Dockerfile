@@ -12,6 +12,6 @@ WORKDIR /DiplomeBackup/backend
 RUN npm i 
 
 
-EXPOSE 3001
+EXPOSE 3005
 
 CMD ["node", "app.js"]

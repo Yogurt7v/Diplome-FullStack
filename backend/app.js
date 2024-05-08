@@ -5,7 +5,7 @@ const routes = require('./routes')
 require("dotenv").config();
 
 const cors = require("cors");
-const port = 3005;
+const port = 3001;
 const app = express();
 
 app.use(cookieParser());
