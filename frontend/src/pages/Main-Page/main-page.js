@@ -33,12 +33,6 @@ export const MainPage = () => {
     setSearchPhrase("");
   };
 
-  document.addEventListener("keydown", (event) => {
-    if (event.keyCode === 27) {
-      setSearchPhraseFromSearchBar("");
-      onDelete();
-    }
-  });
 
   const [isActiveItem, setActiveItem] = useState("");
 

@@ -107,6 +107,7 @@ export const PrivateEditForm = ({
     setDescriptionValue(target.value);
   };
   const onCategoryChange = ({ target }) => {
+    console.log(target.value);
     setCategoryValue(target.value);
   };
   const onWeightChange = ({ target }) => {
@@ -183,12 +184,12 @@ export const PrivateEditForm = ({
         onChange={onDescriptionChange}
       />
       <select
-        defaultvaluevalue={categoriesValue[0] || "burger"}
         onChange={onCategoryChange}
         className={styled.select}
       >
+        <option value=""/>
         {categoriesValue?.map((category) => (
-          <option key={category} value={category}>
+          <option key={category} value={category} >
             {category}
           </option>
         ))}

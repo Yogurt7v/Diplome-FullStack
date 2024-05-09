@@ -1,9 +1,7 @@
 export const getOrderByUserIdFetch = async (userId) => {  
 
-    const orders = await fetch(`/buskets/${userId}`)
-    .then((loadedOrders) => loadedOrders.json())
-    .then((loadedOrder) => 
-      loadedOrder)
+    const response = await fetch(`/buskets/${userId}`)
+    const orders = await response.json()
       
     return orders
   }

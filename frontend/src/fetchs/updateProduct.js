@@ -1,4 +1,5 @@
 export const updatedProductFetch = async ({ id, productName, image_url, description, weight, calories, ingredients, category, price }) =>{
+
   const updatedProduct = await fetch(`/products/${id}`, {
     method: "PATCH",
     headers: {
