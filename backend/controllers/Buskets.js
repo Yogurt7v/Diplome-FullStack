@@ -13,8 +13,9 @@ async function getBusketById(id) {
 async function addBusket(busket) {
     console.log("addBusket");
     const newBusket = new Busket(busket);
-    await newBusket.save();
-    return newBusket;
+    const result = await newBusket.save();
+    // await newBusket.save();
+    return result;
 }
 
 async function deleteBusket(id) {

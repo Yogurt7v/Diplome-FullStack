@@ -1,5 +1,5 @@
 import style from "./payment-page.module.css";
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Header, Delivery } from "../components";
@@ -11,7 +11,7 @@ import {
 
 export const PaymentPage = () => {
   const user = useSelector((state) => state.user);
-  const [orders, setOrders] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [delivery, setDelivery] = useState(false);
   const [singleOrder, setSingleOrder] = useState(null);
   const navigate = useNavigate();
@@ -33,28 +33,28 @@ export const PaymentPage = () => {
 
   const deleteOrder = (id) => {
     deleteBusketOrderFetch(id);
-    setOrders(orders.filter((order) => order._id !== id));
+    setOrders(orders?.filter((order) => order._id !== id));
   };
 
-useEffect(() => {
+useLayoutEffect(() => {
     getOrderByUserIdFetch(user.id).then((newData) => {
-        setOrders(newData);
+      setOrders(newData);
     });
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+}, [user.id]);
+
 
 
   return (
     <>
       <Header />
       <div className={style.PaymentPage}>
-        {orders?.length === 0 ? (
+      {orders.length === 0 ? (
           <button className={style.DeleteButton} onClick={() => navigate("/")}>
             Вы отказались от всех заказов. Выберете что-нибудь другое.
           </button>
         ) : null}
         {orders
-          ?.filter((order) => order.paid === false)
+          .filter((order) => order.paid === false)
           .map((order) => (
             <>
               {!delivery && (
@@ -99,6 +99,7 @@ useEffect(() => {
         <div className={style.delyveryWrapper}>
           {delivery ? <Delivery singleOrder={singleOrder} /> : null}
         </div>
+
       </div>
     </>
   );
