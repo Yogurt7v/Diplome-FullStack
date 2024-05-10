@@ -24,7 +24,8 @@ router.post("/", async (req, res) => {
   res.json(products);
 });
 
-router.get("/:id", async (req, res) => {
+router.post("/:id", async (req, res) => {
+  //здесь был метод get
   const product = await getSingleProduct(req.params.id);
   res.json(product);
 });

@@ -14,7 +14,11 @@ function transformProducts (dbProducts) {
 
 
 export const getSingleProduct = async (productId) => {
-  const res = await fetch(`/products/${productId}`);
+  const res = await fetch(`/products/${productId}`, {
+    method: "POST",
+  });
+
+  //здесь был метод get
 
   if (!res.ok) {
     const error = res.status === 404 ? "Такого не существует" : "Ошибка";
