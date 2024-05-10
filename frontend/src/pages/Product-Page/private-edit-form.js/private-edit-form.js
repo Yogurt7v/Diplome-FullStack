@@ -8,7 +8,6 @@ import {
   getAllProducts,
   updatedProductFetch,
 } from "../../../fetchs";
-// import { RESET_PRODUCT_DATA } from "../../../actions";
 
 export const PrivateEditForm = ({
   product: {
@@ -45,7 +44,6 @@ export const PrivateEditForm = ({
     setCaloriesValue(calories);
     setIngredientsValue(ingredients);
     setPriceValue(price);
-    // dispatch(RESET_PRODUCT_DATA);
   }, [
     image_url,
     description,
@@ -107,7 +105,6 @@ export const PrivateEditForm = ({
     setDescriptionValue(target.value);
   };
   const onCategoryChange = ({ target }) => {
-    console.log(target.value);
     setCategoryValue(target.value);
   };
   const onWeightChange = ({ target }) => {
