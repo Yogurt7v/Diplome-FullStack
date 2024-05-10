@@ -36,7 +36,7 @@ export const PaymentPage = () => {
     setOrders(orders?.filter((order) => order._id !== id));
   };
 
-useLayoutEffect(() => {
+  useLayoutEffect(() => {
     getOrderByUserIdFetch(user.id).then((newData) => {
       setOrders(newData);
     });
@@ -48,11 +48,14 @@ useLayoutEffect(() => {
     <>
       <Header />
       <div className={style.PaymentPage}>
-      {orders.length === 0 ? (
-          <button className={style.DeleteButton} onClick={() => navigate("/")}>
-            Вы отказались от всех заказов. Выберете что-нибудь другое.
-          </button>
-        ) : null}
+        <button
+          className={
+            orders.length === 0 ? style.DeleteButton : style.invisibleButton
+          }
+          onClick={() => navigate("/")}
+        >
+          Вы отказались от всех заказов. Выберете что-нибудь другое.
+        </button>
         {orders
           .filter((order) => order.paid === false)
           .map((order) => (
@@ -99,7 +102,6 @@ useLayoutEffect(() => {
         <div className={style.delyveryWrapper}>
           {delivery ? <Delivery singleOrder={singleOrder} /> : null}
         </div>
-
       </div>
     </>
   );

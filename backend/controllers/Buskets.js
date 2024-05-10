@@ -14,7 +14,7 @@ async function addBusket(busket) {
     console.log("addBusket");
     const newBusket = new Busket(busket);
     const result = await newBusket.save();
-    // await newBusket.save();
+    await newBusket.save();
     return result;
 }
 
