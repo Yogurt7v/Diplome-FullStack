@@ -44,6 +44,4 @@ router.post("/withFilter", async (req, res) => {
   res.json(products);
 });
 
-
-
 module.exports = router
