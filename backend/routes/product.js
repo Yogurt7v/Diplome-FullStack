@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
   res.json(products);
 });
 
-router.get("/:id", async (req, res) => {
+router.post("/:id", async (req, res) => {
   const product = await getSingleProduct(req.params.id);
   res.json(product);
 });
