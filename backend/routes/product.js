@@ -10,7 +10,7 @@ const {
 
 const router = express.Router({ mergeParams: true });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res) => {;
   await addProduct(req.body);
 });
 
@@ -19,10 +19,10 @@ router.get("/", async (req, res) => {
   res.json(products);
 });
 
-router.post("/", async (req, res) => {
-  const products = await getProducts(req.body);
-  res.json(products);
-});
+// router.post("/", async (req, res) => {
+//   const products = await getProducts(req.body);
+//   res.json(products);
+// });
 
 router.post("/:id", async (req, res) => {
   const product = await getSingleProduct(req.params.id);
@@ -39,7 +39,7 @@ router.patch("/:id", async (req, res) => {
   res.json(product);
 });
 
-router.post("/withFilter", async (req, res) => {
+router.post("/data/filter", async (req, res) => {
   const products = await getProductsWithFilter(req.body);
   res.json(products);
 });
