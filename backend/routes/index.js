@@ -11,5 +11,6 @@ router.use('/promocodes', require('./promocode'))
 router.use('/products', require('./product'))
 router.use('/comments', require('./comment'))
 router.use('/buskets', require('./busket'))
+router.use('/upload', require('./image'))
 
 module.exports = router

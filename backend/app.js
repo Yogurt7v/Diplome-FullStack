@@ -11,14 +11,15 @@ const app = express();
 
 app.use(express.static("../frontend/build")); // для сборки приложения
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use(cors());
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
 
 app.use('/', routes)
 
 if( process.env.NODE_ENV === "production" ) {
   console.log("production");
-  // app.use(express.static(path.resolve("./", "build")));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve("../frontend/build", "index.html"));

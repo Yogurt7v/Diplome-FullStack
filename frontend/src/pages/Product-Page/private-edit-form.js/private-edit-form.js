@@ -1,5 +1,5 @@
 import styled from "./private-edit-form.module.css";
-import { useLayoutEffect, useEffect, useState } from "react";
+import { useLayoutEffect, useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CustomInput } from "../../components";
@@ -35,6 +35,9 @@ export const PrivateEditForm = ({
   const [ingredientsValue, setIngredientsValue] = useState(ingredients);
   const [priceValue, setPriceValue] = useState(price);
   const [categoriesValue, setCategoriesValue] = useState([]);
+  const [image, setImage] = useState("");
+  const fileInput = useRef(null);
+
 
   useLayoutEffect(() => {
     setImageUrlValue(image_url);
@@ -101,6 +104,34 @@ export const PrivateEditForm = ({
   const onImageChange = ({ target }) => {
     setImageUrlValue(target.value);
   };
+
+  const convertImageToBase64 = (event) => {
+    console.log(event);
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        setImage(reader.result);
+      } 
+      reader.onerror = (error) => {
+        console.log('Ошибка загрузки файла ', error);
+      }
+  }
+
+  const uploadImage = () => {
+    fetch(`/upload`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        base64: image
+      })
+      }).then((res) => res.json()).then((res) => {
+        setImageUrlValue(res.url);
+    })
+}
   const onDescriptionChange = ({ target }) => {
     setDescriptionValue(target.value);
   };
@@ -173,6 +204,20 @@ export const PrivateEditForm = ({
         className="input"
         onChange={onImageChange}
       />
+      <div className={styled.newImageWrapper}>
+        <button onClick={() => fileInput.current.click()} className={styled.EditButtons}>Обзор</button>
+
+      <input
+        type="file"
+        accept="image/*"
+        onChange={convertImageToBase64}
+        className={styled.hidden}
+        ref = {fileInput}
+      />
+      {image === "" ? null :  (<img src={image === "" ? "" : image } alt="loaded"  className={styled.newImage}/>)}
+      <button onClick={uploadImage} className={styled.EditButtons}>Загрузить</button>
+      </div>
+      
       <CustomInput
         value={descriptionValue}
         placeholder="Описание продукта"

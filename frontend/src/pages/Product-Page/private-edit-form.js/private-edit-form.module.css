@@ -58,3 +58,25 @@
   font-weight: 500;
   margin-bottom: 10px;
 }
+
+.newImageWrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.hidden{
+  height: 0;
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.newImage{
+  width: 200px;
+  height: 200px;
+}
