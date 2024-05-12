@@ -18,7 +18,12 @@ export const SearchBar = ({
         value={searchPhraseFromSearchBar}
         onChange={(e) => setSearchPhraseFromSearchBar(e.target.value)}
       ></input>
-      {searchPhraseFromSearchBar.length < 2 ? null : (
+      {searchPhraseFromSearchBar.length < 2 ? (
+        <>
+          <div className={style.SearchBarIcon}></div>
+          <div className={style.SearchBarEraseIcon}></div>
+        </>
+      ) : (
         <>
           <img
             src={search}
