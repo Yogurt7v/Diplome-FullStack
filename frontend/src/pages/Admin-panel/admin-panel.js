@@ -56,7 +56,7 @@ export const AdminPanel = () => {
   const onImageRemove = (id) => {
     dispatch(
       openModal({
-        text: "Удалить изображение? ",
+        text: "Удалить изображение?",
         onConform: () => {
           dispatch(CLOSE_MODAL);
           deleteImageFetch(id);
@@ -260,7 +260,7 @@ export const AdminPanel = () => {
         {imageToRemove?.length > 0 &&
         (userRole === role[0]?.id || userRole === role[1]?.id) ? (
           <details>
-            <summary className={style.AdminPanelSummary}>Изображения</summary>
+            <summary className={style.AdminPanelSummary}>Неиспользуемые изображения</summary>
             {imageToRemove?.map((image) => (
               <div key={image._id} className={style.ImageWrapper}>
                 <img key={image._id} src={image.url} alt="loaded" className={style.imageToRemove}/>
