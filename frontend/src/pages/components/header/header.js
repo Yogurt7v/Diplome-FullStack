@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { logout, clearBusketData } from "../../../actions";
 import { NavMenu, LeftHeader, RightHeader } from "./nav-menu";
 
-export const Header = ({ onCategoryChange, isActiveItem, loading }) => {
+export const Header = ({ onCategoryChange, isActiveItem }) => {
   const loginName = useSelector((state) => state.user.login);
   const session = useSelector((state) => state.user.session);
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const Header = ({ onCategoryChange, isActiveItem, loading }) => {
 
   return (
     <div className={style.HeaderWrapper}>
-      <LeftHeader loading={loading} />
+      <LeftHeader/>
       <div className={style.HeaderMenuWrapper}>
         {visible ? (
           <NavMenu

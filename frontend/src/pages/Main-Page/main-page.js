@@ -90,7 +90,6 @@ export const MainPage = () => {
       <Header
         onCategoryChange={onCategoryChange}
         isActiveItem={isActiveItem}
-        loading={loading}
       />
       <div className={style.AppWrapper}>
         <div className={style.SortBarWrapper}>
