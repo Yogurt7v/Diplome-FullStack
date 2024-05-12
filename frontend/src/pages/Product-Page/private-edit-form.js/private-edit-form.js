@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { CustomInput } from "../../components";
 import {
   addProductFetch,
-  getAllProducts,
   updatedProductFetch,
 } from "../../../fetchs";
 
@@ -21,6 +20,7 @@ export const PrivateEditForm = ({
     ingredients,
     price,
   },
+  allProducts,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -86,17 +86,16 @@ export const PrivateEditForm = ({
   };
 
   useEffect(() => {
-    getAllProducts().then((products) => {
+    let products = allProducts
       let categories = [];
-      for (let i = 0; i < products.length; i++) {
+      for (let i = 0; i < products?.length; i++) {
         categories.push(products[i].category);
       }
       const uniqueСategories = categories.filter((value, index, self) => {
         return self.indexOf(value) === index;
       });
       setCategoriesValue(uniqueСategories);
-    });
-  }, []);
+  }, [allProducts]);
 
   const onProductNameChange = ({ target }) => {
     setProductNameValue(target.value);
@@ -106,7 +105,6 @@ export const PrivateEditForm = ({
   };
 
   const convertImageToBase64 = (event) => {
-    console.log(event);
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = () => {
@@ -118,9 +116,10 @@ export const PrivateEditForm = ({
   }
 
   const uploadImage = () => {
+    setImageUrlValue("")
     fetch(`/upload`, {
       method: "POST",
-      headers: {
+      headers: {  
         "Content-Type": "application/json",
         "Accept": "application/json",
         "Access-Control-Allow-Origin": "*",
