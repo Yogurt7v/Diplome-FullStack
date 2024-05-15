@@ -15,6 +15,7 @@ import { Header } from "../components";
 import Slider from "../components/slider/Slider";
 import { InputMask } from "@react-input/mask";
 import { registerFetch } from "../../fetchs";
+import { sessions } from "../../fetchs";
 
 const regFormSchema = yup.object().shape({
   login: yup
@@ -89,8 +90,12 @@ export const RegisterPage = () => {
           setServerError(`${error}`);
           return;
         }
-        dispatch(setUser(res));
-        localStorage.setItem("userData", JSON.stringify(res));
+        const updatedUser = {
+          ...res,
+          session: sessions.create(res),
+        }
+        dispatch(setUser(updatedUser));
+        localStorage.setItem("userData", JSON.stringify(updatedUser));
         navigate("/");
       }
     );

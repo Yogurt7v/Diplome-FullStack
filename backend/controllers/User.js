@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/User.js");
+
 async function newUserRegister(
   login,
   password,

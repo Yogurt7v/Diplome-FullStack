@@ -26,8 +26,8 @@ router.post("/login", async (req, res) => {
     return res.json({ error: user.error, res: user.res });
 });
 
-router.post("/logout", (req, res) => {
-  res.clearCookie("token").json({ error: null });
-});
+// router.post("/logout", (req, res) => {
+//   res.clearCookie("token").json({ error: null });
+// });
 
 module.exports = router;

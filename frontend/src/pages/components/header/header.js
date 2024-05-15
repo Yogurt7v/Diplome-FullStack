@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {clearBusketData} from "../../../slices/busketSlice";
 import { logout } from "../../../slices/userSlice";
 import { NavMenu, LeftHeader, RightHeader } from "./nav-menu";
+import { sessions } from "../../../fetchs/sessions";
 
 export const Header = ({ onCategoryChange, isActiveItem }) => {
   const loginName = useSelector((state) => state.user.login);
@@ -15,7 +16,8 @@ export const Header = ({ onCategoryChange, isActiveItem }) => {
 
   const onLogout = () => {
 
-    dispatch(logout(session));
+    dispatch(logout());
+    sessions.remove(session);
     localStorage.removeItem("userData");
     dispatch(clearBusketData());
     let currentURL = window.location.pathname;
