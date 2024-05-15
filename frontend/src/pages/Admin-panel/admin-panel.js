@@ -3,7 +3,8 @@ import trash from "../../icons/trash.svg";
 import { useLayoutEffect, useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserRole } from "../../selectors";
-import { CLOSE_MODAL, openModal, setUser } from "../../actions";
+import { closeModal, openModal } from "../../slices/appSlice.js";
+import { setUser } from "../../slices/userSlice.js";
 import { checkAccess } from "../../utils";
 import { Header, Orders, Reports, UserRow } from "../components";
 import { PrivateEditForm } from "../Product-Page/private-edit-form.js";
@@ -16,7 +17,6 @@ import {
   deleteBusketOrderFetch,
   getReportsFetch,
   deleteReportFetch,
-  getAllProducts,
   getAllImagesFetch,
   deleteImageFetch,
 } from "../../fetchs";
@@ -27,7 +27,6 @@ export const AdminPanel = () => {
   const [users, setUsers] = useState([]);
   const [role, setRole] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [shouldUpdateUserList, setShouldUpdateUserList] = useState(false);
   const userRole = useSelector(selectUserRole);
   const newProduct = {
     id: "",
@@ -47,23 +46,22 @@ export const AdminPanel = () => {
   const [reports, setReports] = useState([]);
   const [reportDeleteMessage, setReportDeleteMessage] = useState(null);
   const [ordersDeleteMessage, setOrdersDeleteMessage] = useState(null);
-  const [allProducts, setAllProducts] = useState([]);
+  const allProducts = useSelector((state) => state.products.items);
   const [allImages, setAllImages] = useState([]);
   const [imageToRemove, setImageToRemove] = useState(null);
   const [loading, setLoading] = useState(false);
-
 
   const onImageRemove = (id) => {
     dispatch(
       openModal({
         text: "Удалить изображение?",
         onConform: () => {
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
           deleteImageFetch(id);
           setAllImages(allImages.filter((image) => image._id !== id));
         },
         onCancel: () => {
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
         },
       })
     );
@@ -78,7 +76,7 @@ export const AdminPanel = () => {
       openModal({
         text: "Удалить заказ? ",
         onConform: () => {
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
           deleteBusketOrderFetch(id);
           setOrders(orders.filter((order) => order._id !== id));
           setOrdersDeleteMessage("Заказ удален");
@@ -87,7 +85,7 @@ export const AdminPanel = () => {
           }, 3000);
         },
         onCancel: () => {
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
         },
       })
     );
@@ -97,7 +95,7 @@ export const AdminPanel = () => {
       openModal({
         text: "Удалить жалобу? ",
         onConform: () => {
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
           setReportDeleteMessage("Жалоба удалена");
           setReports(reports.filter((report) => report._id !== id));
           deleteReportFetch(id);
@@ -106,7 +104,7 @@ export const AdminPanel = () => {
           }, 3000);
         },
         onCancel: () => {
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
         },
       })
     );
@@ -118,7 +116,7 @@ export const AdminPanel = () => {
         setErrorMessage("Доступ запрещен");
         return;
       }
-      const user = users.find((user) => user.id === userId);
+      let  user = users.find((user) => user.id === userId);
 
       if (user.roleId === 0) {
         setErrorMessage("Нельзя удалить администратора");
@@ -127,10 +125,9 @@ export const AdminPanel = () => {
       setErrorMessage(null);
       removeUserFetch(userId).then(() => {
         setUsers(users.filter((user) => user.id !== userId));
-        setShouldUpdateUserList(!shouldUpdateUserList);
       });
     },
-    [role, shouldUpdateUserList, userRole, users]
+    [role, userRole, users]
   );
 
   useLayoutEffect(() => {
@@ -152,15 +149,13 @@ export const AdminPanel = () => {
       getRolesFetch(),
       getOrdersFetch(),
       getReportsFetch(),
-      getAllProducts(),
       getAllImagesFetch(),
     ]).then(
-      ([usersRes, rolesRes, ordersRes, reportsRes, productsRes, imagesRes]) => {
+      ([usersRes, rolesRes, ordersRes, reportsRes, imagesRes]) => {
         setUsers(usersRes);
         setRole(rolesRes);
         setOrders(ordersRes);
         setReports(reportsRes);
-        setAllProducts(productsRes);
         setAllImages(imagesRes);
         setLoading(false)
       }

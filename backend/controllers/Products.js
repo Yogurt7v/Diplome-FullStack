@@ -36,32 +36,10 @@ async function updateProduct(id, productData) {
   return product;
 }
 
-async function getProductsWithFilter(obj) {
-    const {searchPhrase, searchCategory} = obj;
-    if (searchPhrase && !searchCategory) {
-        const products = await Product.find({
-            description: { $regex: searchPhrase, $options: "i" },
-        })
-        return products
-    }
-    if (!searchPhrase && !searchCategory) {
-        const products = await Product.find()
-        return products
-    }
-    if (!searchPhrase && searchCategory) {
-    const products = await Product.find({
-            category: { $regex: searchCategory, $options: "i" } ,
-    })
-    return products
-    }
-
-}
-
 module.exports = {
   addProduct,
   getProducts,
   getSingleProduct,
   deleteProduct,
   updateProduct,
-  getProductsWithFilter,
 };

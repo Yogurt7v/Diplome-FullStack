@@ -5,7 +5,6 @@ const {
   getSingleProduct,
   deleteProduct,
   updateProduct,
-  getProductsWithFilter,
 } = require("../controllers/Products");
 
 const router = express.Router({ mergeParams: true });
@@ -18,11 +17,6 @@ router.get("/", async (req, res) => {
   const products = await getProducts();
   res.json(products);
 });
-
-// router.post("/", async (req, res) => {
-//   const products = await getProducts(req.body);
-//   res.json(products);
-// });
 
 router.post("/:id", async (req, res) => {
   const product = await getSingleProduct(req.params.id);
@@ -39,9 +33,5 @@ router.patch("/:id", async (req, res) => {
   res.json(product);
 });
 
-router.post("/data/filter", async (req, res) => {
-  const products = await getProductsWithFilter(req.body);
-  res.json(products);
-});
 
 module.exports = router

@@ -1,7 +1,7 @@
 import { useLayoutEffect, useEffect, useState } from "react";
 import { useParams, useMatch } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../actions";
+import { setUser } from "../../slices/userSlice.js";
 import { ROLE } from "../../constants/role.js";
 import { ProductContent, PrivateProductContent, PrivateEditForm } from "./index.js";
 import { getSingleProduct } from "../../fetchs";

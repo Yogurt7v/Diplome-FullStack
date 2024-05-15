@@ -3,12 +3,9 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectBusket, selectUserId } from "../../selectors";
-import {
-  openModal,
-  CLOSE_MODAL,
-  clearBusketData,
-  removeBusketData,
-} from "../../actions";
+import { clearBusketData } from "../../slices/busketSlice";
+import { removeBusketData } from "../../slices/busketSlice";
+import { closeModal, openModal } from "../../slices/appSlice";
 import Header from "../components/header/header";
 import { VideoBackground } from "../components";
 import trash from "../../icons/trash.svg";
@@ -78,13 +75,13 @@ export const Busket = () => {
         text: "Заказ создан! Перейти к оплате?",
         onConform: () => {
           setDiscount(0);
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
           dispatch(clearBusketData());
           addProductToBusketOperationFetch(items, discount);
           navigate("/payment");
         },
         onCancel: () => {
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
           navigate("/");
         },
       })

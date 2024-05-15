@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { SpecialPanel } from "../index";
 import { VideoBackground, Comments } from "../../components";
 import { useSelector, useDispatch } from "react-redux";
-import { addBusketData } from "../../../actions";
+import { addBusketData } from "../../../slices/busketSlice";
 
 export const ProductContent = ({
   product: {

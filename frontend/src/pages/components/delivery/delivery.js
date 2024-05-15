@@ -3,7 +3,8 @@ import deliveryIcon from "../../../icons/delivery.svg";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { openModal, CLOSE_MODAL } from "../../../actions";
+import { openModal } from "../../../slices/appSlice";
+import { closeModal } from "../../../slices/appSlice";
 
 export const Delivery = ({ singleOrder }) => {
   const [getOrder, setOrder] = useState(false);
@@ -30,11 +31,11 @@ export const Delivery = ({ singleOrder }) => {
         openModal({
           text: "Спасибо за заказ! Надюсь вам все понравилось.",
           onConform: () => {
-            dispatch(CLOSE_MODAL);
+            dispatch(closeModal);
             navigate("/");
           },
           onCancel: () => {
-            dispatch(CLOSE_MODAL);
+            dispatch(closeModal);
             navigate("/report");
           },
         })

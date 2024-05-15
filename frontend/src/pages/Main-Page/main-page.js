@@ -1,7 +1,9 @@
 import style from "./main-page.module.css";
 import { useLayoutEffect, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../slices/userSlice";
+import { addProductsData } from "../../slices/productsSlice";
+import {setAllUsers} from "../../slices/allUsersSlice";
 import {
   SortBar,
   Header,
@@ -10,10 +12,11 @@ import {
   BusketCard,
 } from "../components";
 import { SORT_OPTIONS } from "../../constants";
-import { getAllProducts } from "../../fetchs";
+import { getAllProducts, getUsersFetch } from "../../fetchs";
 
 export const MainPage = () => {
   const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.products.items);
   const [products, setProducts] = useState([]);
   const [searchPhrase, setSearchPhrase] = useState("");
   const [searchPhraseFromSearchBar, setSearchPhraseFromSearchBar] =
@@ -72,18 +75,25 @@ export const MainPage = () => {
       );
     }
   }, [dispatch]);
+  
+  useEffect(() => {
+    Promise.all([
+      getAllProducts(),
+      getUsersFetch()
+    ]).then(([allProducts, allUsers]) => {
+      dispatch(addProductsData(allProducts))
+      dispatch(setAllUsers(allUsers));
+    })}, [dispatch])
 
   useEffect(() => {
-    getAllProducts(searchPhrase, searchCategory).then((products) => {
       const sortObJ = sortOption.find((option) => option.value === sorting);
-      const filteredProducts = products.filter((product) =>
-        searchCategory ? product.category === searchCategory : product
+      const filteredProducts = allProducts.filter((allProducts) =>
+        searchCategory ? allProducts.category === searchCategory : allProducts
       );
       setProducts(sortObJ ? sortObJ.sort(filteredProducts) : filteredProducts);
       setCurrentPage(1);
       setLoading(false);
-    });
-  }, [searchPhrase, searchCategory, sorting, sortOption]);
+  }, [searchPhrase, searchCategory, sorting, sortOption, dispatch, allProducts]);
 
   return (
     <>

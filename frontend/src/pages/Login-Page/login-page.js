@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { selectUserRole } from "../../selectors";
-import { setUser } from "../../actions";
+import { setUser } from "../../slices/userSlice";
 import { useResetForm } from "../../hooks";
 import { ROLE } from "../../constants/role";
 import { Header } from "../components";

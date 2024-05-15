@@ -3,7 +3,7 @@ import trash from "../../../icons/trash.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectUserRole } from "../../../selectors";
-import { openModal, CLOSE_MODAL } from "../../../actions";
+import { closeModal, openModal } from "../../../slices/appSlice";
 import { ROLE } from "../../../constants/role";
 import { checkAccess } from "../../../utils";
 import { deleteProductFetch } from "../../../fetchs";
@@ -21,9 +21,9 @@ export const SpecialPanel = ({ id, editButton }) => {
           deleteProductFetch(id).then(() => {
             navigate(`/`);
           });
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
         },
-        onCancel: () => dispatch(CLOSE_MODAL),
+        onCancel: () => dispatch(closeModal),
       })
     );
   };

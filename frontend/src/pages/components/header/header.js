@@ -2,7 +2,8 @@ import style from "./header.module.css";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout, clearBusketData } from "../../../actions";
+import {clearBusketData} from "../../../slices/busketSlice";
+import { logout } from "../../../slices/userSlice";
 import { NavMenu, LeftHeader, RightHeader } from "./nav-menu";
 
 export const Header = ({ onCategoryChange, isActiveItem }) => {

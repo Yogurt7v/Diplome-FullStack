@@ -26,8 +26,6 @@ export const getSessionFetch = async (hash) =>{
 
 }
 export const deleteSessionFetch = async (sessionId) => {
-
-
     fetch(`/sessions/${sessionId}`, {
       method: "DELETE",
     });

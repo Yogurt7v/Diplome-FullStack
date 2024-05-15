@@ -5,16 +5,16 @@ import { useParams } from "react-router-dom";
 import edit from "../../../icons/edit.svg";
 import { SingleComment } from "./single-comment";
 import { selectUserId, selectUserRole } from "../../../selectors";
-import { openModal, CLOSE_MODAL } from "../../../actions";
+import { closeModal, openModal } from "../../../slices/appSlice";
 import { ROLE } from "../../../constants";
 import {
   getComments,
   addCommentFetch,
   deleteCommentFetch,
-  getUsersFetch,
 } from "../../../fetchs";
 
 export const Comments = () => {
+  const users = useSelector((state) => state.allUsers.users);
   const [newComment, setNewComment] = useState(null);
   const userId = useSelector(selectUserId);
   const userRole = useSelector(selectUserRole);
@@ -33,9 +33,9 @@ export const Comments = () => {
         onConform: () => {
           deleteCommentFetch(id);
           setComments(comments.filter((comment) => comment._id !== id));
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal);
         },
-        onCancel: () => dispatch(CLOSE_MODAL),
+        onCancel: () => dispatch(closeModal),
       })
     );
   };
@@ -56,12 +56,10 @@ export const Comments = () => {
   };
 
   useEffect(() => {
-    getUsersFetch().then((users) => {
-      const user = users.find((user) => user.id === userId);
+      const user = users?.find((user) => user.id === userId);
       setAuthor(user?.login);
-    });
     getComments(productId.id).then((comments) => setComments(comments));
-  }, [productId.id, setComments, userId]);
+  }, [productId.id, setComments, userId, users]);
 
   return (
     <>
