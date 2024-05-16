@@ -1,16 +1,17 @@
 import style from "./new-style-content.module.css";
 import Card from "../card/card";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Pagination } from "../pagination/pagination";
 import SkeletonCard from "../skeleton/SkeletonCard";
 
 export const MainContent = ({
-  products,
-  loading,
   currentPage,
   setCurrentPage,
+  products,
 }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const loading = useSelector((state) => state.products.isLoading);
   const handleResize = () => {
     setTimeout(() => {
       setWindowWidth(window.innerWidth);

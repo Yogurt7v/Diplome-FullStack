@@ -9,10 +9,8 @@ import { checkAccess } from "../../utils";
 import { Header, Orders, Reports, UserRow } from "../components";
 import { PrivateEditForm } from "../Product-Page/private-edit-form.js";
 import {
-  getUsersFetch,
   getRolesFetch,
   getOrdersFetch,
-  removeUserFetch,
   updateBusketOrdersFetch,
   deleteBusketOrderFetch,
   getReportsFetch,
@@ -21,10 +19,11 @@ import {
   deleteImageFetch,
 } from "../../fetchs";
 import { ColorRing } from "react-loader-spinner";
+import {deleteUserFetch} from "../../slices/allUsersSlice.js";
 
 export const AdminPanel = () => {
   const dispatch = useDispatch();
-  const [users, setUsers] = useState([]);
+  const users = useSelector((state) => state.allUsers.items);
   const [role, setRole] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const userRole = useSelector(selectUserRole);
@@ -116,18 +115,16 @@ export const AdminPanel = () => {
         setErrorMessage("Доступ запрещен");
         return;
       }
-      let  user = users.find((user) => user.id === userId);
+      let  user = users?.find((user) => user.id === userId);
 
       if (user.roleId === 0) {
         setErrorMessage("Нельзя удалить администратора");
         return;
       }
       setErrorMessage(null);
-      removeUserFetch(userId).then(() => {
-        setUsers(users.filter((user) => user.id !== userId));
-      });
+      dispatch(deleteUserFetch())
     },
-    [role, userRole, users]
+    [role, userRole, users, dispatch]
   );
 
   useLayoutEffect(() => {
@@ -145,14 +142,12 @@ export const AdminPanel = () => {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      getUsersFetch(),
       getRolesFetch(),
       getOrdersFetch(),
       getReportsFetch(),
       getAllImagesFetch(),
     ]).then(
-      ([usersRes, rolesRes, ordersRes, reportsRes, imagesRes]) => {
-        setUsers(usersRes);
+      ([ rolesRes, ordersRes, reportsRes, imagesRes]) => {
         setRole(rolesRes);
         setOrders(ordersRes);
         setReports(reportsRes);
@@ -168,6 +163,7 @@ export const AdminPanel = () => {
     );
     setImageToRemove(result);
   }, [allImages, allProducts]);
+
 
   return (
     <>

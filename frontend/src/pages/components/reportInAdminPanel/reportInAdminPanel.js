@@ -7,7 +7,7 @@ export const Reports = ({ users, reports, deleteReport }) => {
         <div className={style.AdminReportsWrapper} key={report._id}>
           <div className={style.ReportWrapper}>
             <div className={style.ReportTitle}>
-              Login: {(users.find(({ id }) => id === report.userId) ? users.find(({ id }) => id === report.userId).login : "Пользователь удалён")}
+              Login: {(users?.find(({ id }) => id === report.userId) ? users?.find(({ id }) => id === report.userId).login : "Пользователь удалён")}
             </div>
             <div className={style.ReportText}>Жалоба: {report.text}</div>
             <button

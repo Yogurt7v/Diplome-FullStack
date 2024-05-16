@@ -1,4 +1,3 @@
-import { sessions } from "../fetchs/sessions";
 
 export const loginUser = async (authLogin, authPassword) => {
   const user = await fetch("/login", {
@@ -20,7 +19,6 @@ export const loginUser = async (authLogin, authPassword) => {
       id: user.res._id,
       login: user.res.login,
       roleId: user.res.role_id,
-      session: sessions.create(user),
     },
   };
 };
