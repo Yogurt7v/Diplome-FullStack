@@ -56,12 +56,12 @@ export const AdminPanel = () => {
       openModal({
         text: "Удалить изображение?",
         onConform: () => {
-          dispatch(closeModal);
           deleteImageFetch(id);
           setAllImages(allImages.filter((image) => image._id !== id));
+          dispatch(closeModal());
         },
         onCancel: () => {
-          dispatch(closeModal);
+          dispatch(closeModal());
         },
       })
     );
@@ -76,7 +76,7 @@ export const AdminPanel = () => {
       openModal({
         text: "Удалить заказ? ",
         onConform: () => {
-          dispatch(closeModal);
+          dispatch(closeModal());
           deleteBusketOrderFetch(id);
           setOrders(orders.filter((order) => order._id !== id));
           setOrdersDeleteMessage("Заказ удален");
@@ -85,7 +85,7 @@ export const AdminPanel = () => {
           }, 3000);
         },
         onCancel: () => {
-          dispatch(closeModal);
+          dispatch(closeModal());
         },
       })
     );
@@ -95,7 +95,7 @@ export const AdminPanel = () => {
       openModal({
         text: "Удалить жалобу? ",
         onConform: () => {
-          dispatch(closeModal);
+          dispatch(closeModal());
           setReportDeleteMessage("Жалоба удалена");
           setReports(reports.filter((report) => report._id !== id));
           deleteReportFetch(id);
@@ -104,7 +104,7 @@ export const AdminPanel = () => {
           }, 3000);
         },
         onCancel: () => {
-          dispatch(closeModal);
+          dispatch(closeModal());
         },
       })
     );

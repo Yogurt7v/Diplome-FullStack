@@ -31,11 +31,11 @@ export const Delivery = ({ singleOrder }) => {
         openModal({
           text: "Спасибо за заказ! Надюсь вам все понравилось.",
           onConform: () => {
-            dispatch(closeModal);
+            dispatch(closeModal());
             navigate("/");
           },
           onCancel: () => {
-            dispatch(closeModal);
+            dispatch(closeModal());
             navigate("/report");
           },
         })

@@ -21,9 +21,9 @@ export const SpecialPanel = ({ id, editButton }) => {
           deleteProductFetch(id).then(() => {
             navigate(`/`);
           });
-          dispatch(closeModal);
+          dispatch(closeModal());
         },
-        onCancel: () => dispatch(closeModal),
+        onCancel: () => dispatch(closeModal()),
       })
     );
   };

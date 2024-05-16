@@ -75,13 +75,13 @@ export const Busket = () => {
         text: "Заказ создан! Перейти к оплате?",
         onConform: () => {
           setDiscount(0);
-          dispatch(closeModal);
+          dispatch(closeModal());
           dispatch(clearBusketData());
           addProductToBusketOperationFetch(items, discount);
           navigate("/payment");
         },
         onCancel: () => {
-          dispatch(closeModal);
+          dispatch(closeModal());
           navigate("/");
         },
       })

@@ -33,9 +33,9 @@ export const Comments = () => {
         onConform: () => {
           deleteCommentFetch(id);
           setComments(comments.filter((comment) => comment._id !== id));
-          dispatch(closeModal);
+          dispatch(closeModal());
         },
-        onCancel: () => dispatch(closeModal),
+        onCancel: () => dispatch(closeModal()),
       })
     );
   };
