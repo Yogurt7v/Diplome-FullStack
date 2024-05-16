@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit"
 
 export const appSlice = createSlice({
   name: "app",
@@ -16,7 +16,7 @@ export const appSlice = createSlice({
       state.wasLogout = !state.wasLogout;
     },
 
-    openModal : (state, action) => {
+    openModal: (state, action) => {
       return {
         ...state,
         modal: {
@@ -27,15 +27,14 @@ export const appSlice = createSlice({
       };
     },
 
-closeModal: (state) => {
-    return {
+    closeModal: (state) => {
+      return {
         ...state,
         modal: {
-            ...state.modal,
-            isOpen: false,
+          isOpen: false,
         },
-    };
-},
+      };
+    },
   },
 });
 

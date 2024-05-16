@@ -1,5 +1,5 @@
 import style from "./busket.module.css";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectBusket, selectUserId } from "../../selectors";
@@ -9,27 +9,20 @@ import { closeModal, openModal } from "../../slices/appSlice";
 import Header from "../components/header/header";
 import { VideoBackground } from "../components";
 import trash from "../../icons/trash.svg";
-import { addProductToBusketOperationFetch,getOrderByUserIdFetch, getPromocodeFetch, checkPromocodeFetch } from "../../fetchs";
+import { addProductToBusketOperationFetch, getPromocodeFetch, checkPromocodeFetch } from "../../fetchs";
+import {fetchUserOrders} from "../../slices/userSlice";
 
 export const Busket = () => {
   const dispatch = useDispatch();
-  const userOnPage = useSelector(selectUserId);
-  const user = useSelector(selectUserId);
+  const user = useSelector(selectUserId)
   const busket = useSelector(selectBusket);
+  const userOrders = useSelector((state) => state.user.orders);
   const navigate = useNavigate();
   const [promocode, setPromocode] = useState("");
   const [discount, setDiscount] = useState(0);
-  const [userOrders, setUserOrders] = useState(null);
   const ref = useRef();
 
-  const fetchUserOrders = useCallback(async () => {
-    const orders = await getOrderByUserIdFetch(user);
-    setUserOrders(orders);
-  }, [user]);
-  
-  useEffect(() => {
-    fetchUserOrders();
-  }, [fetchUserOrders]);
+  dispatch(fetchUserOrders(user));
 
   const checkPromocode = (code) => {
     checkPromocodeFetch(code).then((data) => setDiscount(data));
@@ -55,15 +48,10 @@ export const Busket = () => {
   };
 
   useEffect(() => {
-    fetchUserOrders();
-    setDiscount(0);
-  }, [fetchUserOrders]);
-
-  useEffect(() => {
       if (userOrders?.length === 0) {
         createNotification();
       }
-  }, [fetchUserOrders, userOrders]);
+  }, [userOrders]);
 
   const deleteItem = (randomId) => {
     dispatch(removeBusketData(randomId));
@@ -139,7 +127,7 @@ export const Busket = () => {
             )).toFixed(2)}{" "}
             $
           </div>
-          {userOnPage === -1 ? (
+          {user === -1 ? (
             <div className={style.Login}>
               <Link to="/register" className={style.links}>
                 Зарегестрироваться

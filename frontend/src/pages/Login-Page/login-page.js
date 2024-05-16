@@ -46,7 +46,7 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
 
   useResetForm(reset);
-
+  
   const onSubmit = ({ login, password }) => {
     loginUser(login, password).then(({ error, res }) => {
       if (error) {

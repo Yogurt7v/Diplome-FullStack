@@ -15,7 +15,6 @@ import { SORT_OPTIONS } from "../../constants";
 
 export const MainPage = () => {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products.items);
   const productsFromStore = useSelector((state) => state.products.items);
   const [products, setProducts] = useState(productsFromStore);
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -35,9 +34,7 @@ export const MainPage = () => {
     setSearchPhrase("");
   };
 
-
   const [isActiveItem, setActiveItem] = useState("");
-
   const onCategoryChange = (event) => {
     const category = event.target.id;
     if (category === "All") {
@@ -79,9 +76,9 @@ export const MainPage = () => {
     }, [dispatch])
 
   useEffect(() => {
-      let products = allProducts;
+      let products = productsFromStore;
       if(searchCategory){
-        products = allProducts.filter((allProducts) => allProducts.category === searchCategory);
+        products = productsFromStore.filter((productsFromStore) => productsFromStore.category === searchCategory);
       }
       if (searchPhrase) {
         products = products.filter((product) => product.description.includes(searchPhrase));
@@ -91,7 +88,7 @@ export const MainPage = () => {
       }
       setProducts(products);
       setCurrentPage(1);
-  }, [searchPhrase, searchCategory, sorting, sortOption, dispatch, allProducts]);
+  }, [searchPhrase, searchCategory, sorting, sortOption, dispatch, productsFromStore]);
 
   return (
     <>

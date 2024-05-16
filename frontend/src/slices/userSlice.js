@@ -1,5 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ROLE } from "../constants/role";
+import { fecthBusket } from "../fetchs/fetchBusket";
+
+export const fetchUserOrders = createAsyncThunk("user/fetchUserOrders", async(user) => {
+    const allOrders = await fecthBusket().then((data) => data.res);
+    const data = allOrders.filter((order) => order.userId === user);
+    return data;
+}) 
 
 export const userSlice = createSlice({
     name: "user",
@@ -22,6 +29,11 @@ export const userSlice = createSlice({
 
         },
     },
+    extraReducers: (builder) => {
+        builder.addCase(fetchUserOrders.fulfilled, (state, action) => {
+            state.orders = action.payload
+        })
+    }
 });
 
 export const { setUser, logout } = userSlice.actions;
