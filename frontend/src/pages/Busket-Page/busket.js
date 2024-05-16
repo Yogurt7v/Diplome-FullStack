@@ -22,7 +22,10 @@ export const Busket = () => {
   const [discount, setDiscount] = useState(0);
   const ref = useRef();
 
-  dispatch(fetchUserOrders(user));
+
+  useEffect(() => {
+    dispatch(fetchUserOrders(user));
+  }, [dispatch, user]);
 
   const checkPromocode = (code) => {
     checkPromocodeFetch(code).then((data) => setDiscount(data));
