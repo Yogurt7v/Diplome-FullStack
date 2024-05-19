@@ -9,17 +9,12 @@ import { checkAccess } from "../../utils";
 import { Header, Orders, Reports, UserRow } from "../components";
 import { PrivateEditForm } from "../Product-Page/private-edit-form.js";
 import {
-  getRolesFetch,
-  getOrdersFetch,
   updateBusketOrdersFetch,
-  deleteBusketOrderFetch,
-  getReportsFetch,
-  deleteReportFetch,
   getAllImagesFetch,
-  deleteImageFetch,
 } from "../../fetchs";
 import { ColorRing } from "react-loader-spinner";
 import {deleteUserFetch} from "../../slices/allUsersSlice.js";
+import axios from "axios";
 
 export const AdminPanel = () => {
   const dispatch = useDispatch();
@@ -55,7 +50,7 @@ export const AdminPanel = () => {
       openModal({
         text: "Удалить изображение?",
         onConform: () => {
-          deleteImageFetch(id);
+          axios.delete (`/upload/${id}`);
           setAllImages(allImages.filter((image) => image._id !== id));
           dispatch(closeModal());
         },
@@ -76,7 +71,7 @@ export const AdminPanel = () => {
         text: "Удалить заказ? ",
         onConform: () => {
           dispatch(closeModal());
-          deleteBusketOrderFetch(id);
+          axios.delete(`/buskets/${id}`);
           setOrders(orders.filter((order) => order._id !== id));
           setOrdersDeleteMessage("Заказ удален");
           setTimeout(() => {
@@ -97,7 +92,7 @@ export const AdminPanel = () => {
           dispatch(closeModal());
           setReportDeleteMessage("Жалоба удалена");
           setReports(reports.filter((report) => report._id !== id));
-          deleteReportFetch(id);
+          axios.delete(`/reports/${id}`);
           setTimeout(() => {
             setReportDeleteMessage(null);
           }, 3000);
@@ -122,7 +117,7 @@ export const AdminPanel = () => {
         return;
       }
       setErrorMessage(null);
-      dispatch(deleteUserFetch())
+      dispatch(deleteUserFetch(userId))
     },
     [role, userRole, users, dispatch]
   );
@@ -142,15 +137,15 @@ export const AdminPanel = () => {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      getRolesFetch(),
-      getOrdersFetch(),
-      getReportsFetch(),
+      axios.get("/roles"),
+      axios.get("/buskets"),
+      axios.get("/reports"),
       getAllImagesFetch(),
     ]).then(
       ([ rolesRes, ordersRes, reportsRes, imagesRes]) => {
-        setRole(rolesRes);
-        setOrders(ordersRes);
-        setReports(reportsRes);
+        setRole(rolesRes.data);
+        setOrders(ordersRes.data);
+        setReports(reportsRes.data);
         setAllImages(imagesRes);
         setLoading(false)
       }

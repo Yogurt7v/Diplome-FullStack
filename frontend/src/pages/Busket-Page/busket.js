@@ -9,8 +9,9 @@ import { closeModal, openModal } from "../../slices/appSlice";
 import Header from "../components/header/header";
 import { VideoBackground } from "../components";
 import trash from "../../icons/trash.svg";
-import { addProductToBusketOperationFetch, getPromocodeFetch, checkPromocodeFetch } from "../../fetchs";
+import { addProductToBusketOperationFetch } from "../../fetchs";
 import {fetchUserOrders} from "../../slices/userSlice";
+import axios from "axios";
 
 export const Busket = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,11 @@ export const Busket = () => {
   }, [dispatch, user]);
 
   const checkPromocode = (code) => {
-    checkPromocodeFetch(code).then((data) => setDiscount(data));
+    axios.get(`/promocodes/${code}`).then((data) => {
+      if (data.data) {
+        setDiscount(data.data.discount);
+      }
+    })
     ref.current.value = "";
   };
 
@@ -37,7 +42,7 @@ export const Busket = () => {
       const discount = async () => {
         const permission = await Notification.requestPermission();
         if (permission === "granted") {
-          const { code } = await getPromocodeFetch();
+          const { code } = await axios.get("/promocodes").then((data) => data.data);
           new Notification("Рады Вас видеть!", {
             body: `Промокод на скидку: ${code}`,
             icon: "https://grizly.club/uploads/posts/2023-01/1674322054_grizly-club-p-aktsiya-klipart-48.jpg",

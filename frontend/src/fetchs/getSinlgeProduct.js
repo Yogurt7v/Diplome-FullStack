@@ -1,3 +1,5 @@
+import axios from "axios";
+
 function transformProducts (dbProducts) {
     return {
     id: dbProducts._id,
@@ -18,10 +20,6 @@ export const getSingleProduct = async (productId) => {
     method: "POST",
   });
 
-  if (!res.ok) {
-    const error = res.status === 404 ? "Такого не существует" : "Ошибка";
-    throw error;
-  }
 
   const loadedProduct = await res.json();
   return loadedProduct ? transformProducts(loadedProduct) : null;

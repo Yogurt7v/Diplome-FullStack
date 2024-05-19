@@ -6,7 +6,7 @@ import { selectUserRole } from "../../../selectors";
 import { closeModal, openModal } from "../../../slices/appSlice";
 import { ROLE } from "../../../constants/role";
 import { checkAccess } from "../../../utils";
-import { deleteProductFetch } from "../../../fetchs";
+import axios from "axios";
 
 export const SpecialPanel = ({ id, editButton }) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const SpecialPanel = ({ id, editButton }) => {
       openModal({
         text: "Удалить продукт?",
         onConform: () => {
-          deleteProductFetch(id).then(() => {
+          axios.delete(`/products/${id}`).then(() => {
             navigate(`/`);
           });
           dispatch(closeModal());

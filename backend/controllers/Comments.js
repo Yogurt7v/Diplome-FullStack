@@ -8,8 +8,8 @@ async function getComments(productId) {
 async function addComment(reqest) {
     const comment = new Comment({
         author: reqest.author,
-        authorId: reqest.authorId,
-        productsId: reqest.productsId,
+        authorId: reqest.userId,
+        productsId: reqest.productId,
         content: reqest.content,
         publishedAt: new Date(),
     });

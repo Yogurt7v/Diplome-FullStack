@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ROLE } from "../constants/role";
-import { fecthBusket } from "../fetchs/fetchBusket";
+import axios from "axios";
 
 export const fetchUserOrders = createAsyncThunk("user/fetchUserOrders", async(user) => {
-    const allOrders = await fecthBusket().then((data) => data.res);
+
+    
+    const allOrders = await axios.get("/buskets").then((data) => data.data);
     const data = allOrders.filter((order) => order.userId === user);
     return data;
 }) 

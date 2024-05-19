@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const transformUser = (dbUser) => ({
     id: dbUser.id,
     login: dbUser.login,
@@ -12,7 +14,8 @@ export const transformUser = (dbUser) => ({
 })
 
 export const getUserFetch = async (loginToFind) => {
-  return fetch(`/users?login=${loginToFind}`)
-  .then((loadedUser) => loadedUser.json())
+  // return fetch(`/users?login=${loginToFind}`)
+  return axios.get(`/users?login=${loginToFind}`)
+  .then((loadedUser) => loadedUser.data)
   .then(([loadedUser]) => loadedUser && transformUser(loadedUser))
 };

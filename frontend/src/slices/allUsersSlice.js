@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUsersFetch } from "../fetchs/getUsers";
-import { removeUserFetch} from "../fetchs/removeUser";
-
-
+import axios from "axios";
 
 export const allUsersFetch = createAsyncThunk("allUsers/allUsersFetch", async() => {
     const data = await getUsersFetch();
@@ -10,7 +8,7 @@ export const allUsersFetch = createAsyncThunk("allUsers/allUsersFetch", async() 
 }) 
 
 export const deleteUserFetch = createAsyncThunk("allUsers/deleteUserFetch", async(id) => {
-    removeUserFetch(id);
+    axios.delete(`/users/${id}`);
     const data = await getUsersFetch();
     return data;
 

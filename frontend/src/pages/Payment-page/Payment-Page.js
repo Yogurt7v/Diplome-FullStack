@@ -6,8 +6,8 @@ import { Header, Delivery } from "../components";
 import {
   getOrderByUserIdFetch,
   setBusketOrdersParams,
-  deleteBusketOrderFetch,
 } from "../../fetchs";
+import axios from "axios";
 
 export const PaymentPage = () => {
   const user = useSelector((state) => state.user);
@@ -32,7 +32,7 @@ export const PaymentPage = () => {
   };
 
   const deleteOrder = (id) => {
-    deleteBusketOrderFetch(id);
+    axios.delete(`/buskets/${id}`);
     setOrders(orders?.filter((order) => order._id !== id));
   };
 
