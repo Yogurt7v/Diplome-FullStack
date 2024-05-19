@@ -1,13 +1,10 @@
+import axios from "axios";
+
 const addProductToBusket = (dataBusket) =>{
-    fetch("/buskets", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        ...dataBusket,
-      }),
-    });
+
+  axios.post("/buskets", {
+    ...dataBusket,
+  })
   }
   
   export const addProductToBusketOperationFetch = async ( items, discount) => {

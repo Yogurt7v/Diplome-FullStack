@@ -4,7 +4,6 @@ const router = express.Router({ mergeParams: true })
 
 router.use('/', require('./auth'))
 router.use('/users', require('./user'))
-router.use('/sessions', require('./session'))
 router.use('/roles', require('./role'))
 router.use('/reports', require('./report'))
 router.use('/promocodes', require('./promocode'))

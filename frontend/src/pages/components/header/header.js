@@ -2,19 +2,19 @@ import style from "./header.module.css";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout, clearBusketData } from "../../../actions";
+import {clearBusketData} from "../../../slices/busketSlice";
+import { logout } from "../../../slices/userSlice";
 import { NavMenu, LeftHeader, RightHeader } from "./nav-menu";
 
 export const Header = ({ onCategoryChange, isActiveItem }) => {
   const loginName = useSelector((state) => state.user.login);
-  const session = useSelector((state) => state.user.session);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(true);
 
   const onLogout = () => {
 
-    dispatch(logout(session));
+    dispatch(logout());
     localStorage.removeItem("userData");
     dispatch(clearBusketData());
     let currentURL = window.location.pathname;

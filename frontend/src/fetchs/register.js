@@ -1,3 +1,4 @@
+import axios from "axios";
 
 export const registerFetch = async (
   regLogin,
@@ -7,6 +8,7 @@ export const registerFetch = async (
   flatNumber,
   phone
 ) => {
+
   const user = await fetch("/register", {
     method: "POST",
     headers: {

@@ -1,15 +1,13 @@
-import { sessions } from "../fetchs/sessions";
+import axios from "axios";
 
 export const loginUser = async (authLogin, authPassword) => {
-  const user = await fetch("/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json;charset=utf-8" },
-    body: JSON.stringify({ login:authLogin, password:authPassword }),
-  }).then((res) => res.json());
-
-  if (user.error) {
+  const user = await axios.post("/login", {
+    login: authLogin,
+    password: authPassword,
+  })
+  if (user.data.error) {
     return {
-      error: user.error,
+      error: user.data.error,
       res: null,
     };
   }
@@ -17,10 +15,9 @@ export const loginUser = async (authLogin, authPassword) => {
   return {
     error: null,
     res: {
-      id: user.res._id,
-      login: user.res.login,
-      roleId: user.res.role_id,
-      session: sessions.create(user),
+      id: user.data.res._id,
+      login: user.data.res.login,
+      roleId: user.data.res.role_id,
     },
   };
 };

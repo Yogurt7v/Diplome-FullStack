@@ -5,7 +5,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserId } from "../../../selectors";
-import { addBusketData } from "../../../actions/add-busket-data";
+// import { addBusketData } from "../../../actions/add-busket-data";
+import { addBusketData } from "../../../slices/busketSlice";
 
 export const Card = ({ id, productName, imageUrl, description, price }) => {
   const [quantity, setQuantity] = useState(1);

@@ -16,7 +16,7 @@ export const SingleComment = ({ id, author, content, onCommentRemove }) => {
           <div className={style.content}>{content}</div>
           <div className={style.author}>
             <img src={userLogo} alt="userLogo" className={style.userLogo} />
-            <div className={style.authorName}>{author}</div>
+            <div className={style.authorName}>{author? author: "пользователь"}</div>
           </div>
         </div>
         {isAdminOrModerator && (

@@ -1,41 +1,39 @@
 import style from "./busket.module.css";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectBusket, selectUserId } from "../../selectors";
-import {
-  openModal,
-  CLOSE_MODAL,
-  clearBusketData,
-  removeBusketData,
-} from "../../actions";
+import { clearBusketData } from "../../slices/busketSlice";
+import { removeBusketData } from "../../slices/busketSlice";
+import { closeModal, openModal } from "../../slices/appSlice";
 import Header from "../components/header/header";
 import { VideoBackground } from "../components";
 import trash from "../../icons/trash.svg";
-import { addProductToBusketOperationFetch,getOrderByUserIdFetch, getPromocodeFetch, checkPromocodeFetch } from "../../fetchs";
+import { addProductToBusketOperationFetch } from "../../fetchs";
+import {fetchUserOrders} from "../../slices/userSlice";
+import axios from "axios";
 
 export const Busket = () => {
   const dispatch = useDispatch();
-  const userOnPage = useSelector(selectUserId);
-  const user = useSelector(selectUserId);
+  const user = useSelector(selectUserId)
   const busket = useSelector(selectBusket);
+  const userOrders = useSelector((state) => state.user.orders);
   const navigate = useNavigate();
   const [promocode, setPromocode] = useState("");
   const [discount, setDiscount] = useState(0);
-  const [userOrders, setUserOrders] = useState(null);
   const ref = useRef();
 
-  const fetchUserOrders = useCallback(async () => {
-    const orders = await getOrderByUserIdFetch(user);
-    setUserOrders(orders);
-  }, [user]);
-  
+
   useEffect(() => {
-    fetchUserOrders();
-  }, [fetchUserOrders]);
+    dispatch(fetchUserOrders(user));
+  }, [dispatch, user]);
 
   const checkPromocode = (code) => {
-    checkPromocodeFetch(code).then((data) => setDiscount(data));
+    axios.get(`/promocodes/${code}`).then((data) => {
+      if (data.data) {
+        setDiscount(data.data.discount);
+      }
+    })
     ref.current.value = "";
   };
 
@@ -44,7 +42,7 @@ export const Busket = () => {
       const discount = async () => {
         const permission = await Notification.requestPermission();
         if (permission === "granted") {
-          const { code } = await getPromocodeFetch();
+          const { code } = await axios.get("/promocodes").then((data) => data.data);
           new Notification("Рады Вас видеть!", {
             body: `Промокод на скидку: ${code}`,
             icon: "https://grizly.club/uploads/posts/2023-01/1674322054_grizly-club-p-aktsiya-klipart-48.jpg",
@@ -58,15 +56,10 @@ export const Busket = () => {
   };
 
   useEffect(() => {
-    fetchUserOrders();
-    setDiscount(0);
-  }, [fetchUserOrders]);
-
-  useEffect(() => {
       if (userOrders?.length === 0) {
         createNotification();
       }
-  }, [fetchUserOrders, userOrders]);
+  }, [userOrders]);
 
   const deleteItem = (randomId) => {
     dispatch(removeBusketData(randomId));
@@ -78,13 +71,13 @@ export const Busket = () => {
         text: "Заказ создан! Перейти к оплате?",
         onConform: () => {
           setDiscount(0);
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal());
           dispatch(clearBusketData());
           addProductToBusketOperationFetch(items, discount);
           navigate("/payment");
         },
         onCancel: () => {
-          dispatch(CLOSE_MODAL);
+          dispatch(closeModal());
           navigate("/");
         },
       })
@@ -142,7 +135,7 @@ export const Busket = () => {
             )).toFixed(2)}{" "}
             $
           </div>
-          {userOnPage === -1 ? (
+          {user === -1 ? (
             <div className={style.Login}>
               <Link to="/register" className={style.links}>
                 Зарегестрироваться

@@ -1,18 +1,17 @@
 import style from "./nav-menu.module.css";
 import { NavMenuItem } from "../../../components";
 import { useEffect, useState } from "react";
-import { getAllProducts } from "../../../../fetchs";
+import { useSelector } from "react-redux";
 
 export const NavMenu = ({ onCategoryChange, isActiveItem }) => {
   const [allCategorys, setAllCategorys] = useState([]);
+  const appProducts = useSelector((state) => state.products.items);
 
   useEffect(() => {
-    getAllProducts().then((res) => {
-      const uniqueCategorys = [...new Set(res.map(({ category }) => category))];
+      const uniqueCategorys = [...new Set(appProducts.map(({ category }) => category))];
       uniqueCategorys.unshift("All");
       setAllCategorys(uniqueCategorys);
-    });
-  }, []);
+  }, [appProducts]);
 
   return (
     <>

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 function transformUser(dbUser) {
   return {
     id: dbUser._id,
@@ -12,11 +14,8 @@ function transformUser(dbUser) {
 }
 
 export const getUsersFetch = async () => {
-  const users = await fetch("/users", {
-    method: "GET",
-  }).then(
-    (loadedUsers) => loadedUsers.json()
-  );
-  const modifyUsers = users.map(transformUser);
+
+  const users = await axios.get("/users");
+  const modifyUsers = users.data.map(transformUser);
   return  modifyUsers
 };

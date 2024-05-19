@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components";
-import { addReportFetch } from "../../fetchs";
+import axios from "axios";
 
 export const ReportPage = () => {
   const user = useSelector((state) => state.user);
@@ -20,7 +20,8 @@ export const ReportPage = () => {
       userId: user.id,
       text: reporText,
     };
-    addReportFetch(report);
+
+    axios.post("/reports", report);
     ref.current.value = "";
     navigate("/");
   };

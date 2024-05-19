@@ -1,12 +1,7 @@
+import axios from "axios";
 export const setBusketOrdersParams = (id, paidParam, deliveryParam) => {
-    fetch(`/buskets/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        paid: paidParam,
-        delivered: deliveryParam,
-      }),
-    }).then((updatedOrder) => updatedOrder.json());
+  axios.patch(`/buskets/${id}`, {
+    paid: paidParam,
+    delivered: deliveryParam,
+  })
 }
