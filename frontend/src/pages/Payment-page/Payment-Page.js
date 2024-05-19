@@ -11,7 +11,7 @@ import axios from "axios";
 
 export const PaymentPage = () => {
   const user = useSelector((state) => state.user);
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState(null);
   const [delivery, setDelivery] = useState(false);
   const [singleOrder, setSingleOrder] = useState(null);
   const navigate = useNavigate();
@@ -48,16 +48,8 @@ export const PaymentPage = () => {
     <>
       <Header />
       <div className={style.PaymentPage}>
-        <button
-          className={
-            orders.length === 0 ? style.DeleteButton : style.invisibleButton
-          }
-          onClick={() => navigate("/")}
-        >
-          Вы отказались от всех заказов. Выберете что-нибудь другое.
-        </button>
-        {orders
-          .filter((order) => order.paid === false)
+
+        {orders?.filter((order) => order.paid === false)
           .map((order) => (
             <>
               {!delivery && (
@@ -99,6 +91,14 @@ export const PaymentPage = () => {
               )}
             </>
           ))}
+                  <button
+          className={
+           delivery ? style.invisibleButton : style.DeleteButton
+          }
+          onClick={() => navigate("/")}
+        >
+          Назад
+        </button>
         <div className={style.delyveryWrapper}>
           {delivery ? <Delivery singleOrder={singleOrder} /> : null}
         </div>

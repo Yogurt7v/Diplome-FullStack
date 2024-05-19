@@ -19,7 +19,8 @@ root.render(
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/admin-panel" element={<AdminPanel />} />
-        <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
+        {/* <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} /> */}
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/products/:id" element={<ProductPage />} />
         <Route path="/products/:id/edit" element={<ProductPage />} />
         <Route path="/busket" element={<Busket />} />
